@@ -3,6 +3,7 @@
   "globalDependencies": [
     "**/.env.*local"
   ],
+  "globalEnv": ["PORT"],
   "tasks": {
     "dev": {
       "cache": false,

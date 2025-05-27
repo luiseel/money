@@ -1,4 +1,4 @@
-import { defineConfig, devices } from '@playwright/test';
+import { defineConfig, devices } from "@playwright/test";
 
 /**
  * Read environment variables from file.
@@ -11,11 +11,11 @@ import { defineConfig, devices } from '@playwright/test';
  * See https://playwright.dev/docs/test-configuration.
  */
 export default defineConfig({
-  testDir: './test/e2e',
+  testDir: "./test/e2e",
 
-  outputDir: './test/e2e/test-results',
+  outputDir: "./test/e2e/test-results",
 
-  testMatch: '*.e2e-spec.ts',
+  testMatch: "*.e2e-spec.ts",
 
   /* Run tests in files in parallel */
   fullyParallel: true,
@@ -30,15 +30,15 @@ export default defineConfig({
   // workers: process.env.CI ? 1 : undefined,
 
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
-  reporter: 'list',
+  reporter: "list",
 
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
     /* Base URL to use in actions like `await page.goto('/')`. */
-    baseURL: 'http://localhost:3001',
+    baseURL: "http://localhost:3001",
 
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
-    trace: 'on-first-retry',
+    trace: "on-first-retry",
   },
 
   /* Configure projects for major browsers */
@@ -49,8 +49,8 @@ export default defineConfig({
     //   use: { ...devices['Desktop Edge'], channel: 'msedge' },
     // },
     {
-      name: 'Google Chrome',
-      use: { ...devices['Desktop Chrome'], channel: 'chrome' },
+      name: "Google Chrome",
+      use: { ...devices["Desktop Chrome"], channel: "chrome" },
     },
 
     // {
@@ -79,8 +79,8 @@ export default defineConfig({
 
   /* Run your local dev server before starting the tests */
   webServer: {
-    command: 'pnpm run dev',
-    url: 'http://localhost:3001',
+    command: "pnpm run dev",
+    url: "http://localhost:3001",
     reuseExistingServer: true,
   },
 });

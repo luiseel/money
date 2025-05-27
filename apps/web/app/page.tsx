@@ -1,13 +1,13 @@
-import { Suspense } from 'react';
-import Image from 'next/image';
+import { Suspense } from "react";
+import Image from "next/image";
 
-import { Link } from '@repo/api/links/entities/link.entity';
+import { Link } from "@repo/api/links/entities/link.entity";
 
-import { Card } from '@repo/ui/card';
-import { Code } from '@repo/ui/code';
-import { Button } from '@repo/ui/button';
+import { Card } from "@repo/ui/card";
+import { Code } from "@repo/ui/code";
+import { Button } from "@repo/ui/button";
 
-import styles from './page.module.css';
+import styles from "./page.module.css";
 
 const Gradient = ({
   conic,
@@ -27,7 +27,7 @@ const Gradient = ({
         className,
       ]
         .filter(Boolean)
-        .join(' ')}
+        .join(" ")}
     />
   );
 };
@@ -35,7 +35,7 @@ const Gradient = ({
 const LinksSection = async () => {
   const fetchLinks = async (): Promise<Link[]> => {
     try {
-      return await (await fetch('http://localhost:3000/links')).json();
+      return await (await fetch("http://localhost:3000/links")).json();
     } catch (_) {
       return [];
     }
@@ -57,7 +57,7 @@ const LinksSection = async () => {
 const LinksSectionForTest = () => {
   return (
     <div className={styles.grid}>
-      <Card className={styles.card} href={'url'} title={'title'}>
+      <Card className={styles.card} href={"url"} title={"title"}>
         description
       </Card>
     </div>
@@ -77,7 +77,7 @@ const RootPage = ({ params }: { params: { forTest?: boolean } }) => {
             rel="noopener noreferrer"
             target="_blank"
           >
-            By{' '}
+            By{" "}
             <Image
               alt="Vercel Logo"
               className={styles.vercelLogo}
@@ -103,7 +103,7 @@ const RootPage = ({ params }: { params: { forTest?: boolean } }) => {
                 height={614}
                 src="circles.svg"
                 width={614}
-                style={{ pointerEvents: 'none' }}
+                style={{ pointerEvents: "none" }}
               />
             </div>
             <div className={styles.logoGradientContainer}>
@@ -117,7 +117,7 @@ const RootPage = ({ params }: { params: { forTest?: boolean } }) => {
                 priority
                 src="turborepo.svg"
                 width={120}
-                style={{ pointerEvents: 'none' }}
+                style={{ pointerEvents: "none" }}
               />
             </div>
           </div>
@@ -155,7 +155,7 @@ const RootPage = ({ params }: { params: { forTest?: boolean } }) => {
       {params.forTest ? (
         <LinksSectionForTest />
       ) : (
-        <Suspense fallback={'Loading links...'}>{<LinksSection />}</Suspense>
+        <Suspense fallback={"Loading links..."}>{<LinksSection />}</Suspense>
       )}
     </main>
   );
