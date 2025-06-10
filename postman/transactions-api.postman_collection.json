@@ -1,0 +1,244 @@
+{
+  "info": {
+    "name": "Money App - Transactions API",
+    "description": "Collection for testing the Money App Transactions API endpoints",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Transactions",
+      "description": "Endpoints for managing transactions",
+      "item": [
+        {
+          "name": "Get All Transactions",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{auth_token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/transactions?page=1&limit=10&sortBy=createdAt&sortOrder=desc",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "transactions"
+              ],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "1",
+                  "description": "Page number (default: 1)"
+                },
+                {
+                  "key": "limit",
+                  "value": "10",
+                  "description": "Number of items per page (default: 10)"
+                },
+                {
+                  "key": "type",
+                  "value": "EXPENSE",
+                  "description": "Filter by transaction type (INCOME or EXPENSE)",
+                  "disabled": true
+                },
+                {
+                  "key": "title",
+                  "value": "",
+                  "description": "Filter by title (case insensitive)",
+                  "disabled": true
+                },
+                {
+                  "key": "tags",
+                  "value": "",
+                  "description": "Filter by tags",
+                  "disabled": true
+                },
+                {
+                  "key": "startDate",
+                  "value": "",
+                  "description": "Filter by start date (ISO format)",
+                  "disabled": true
+                },
+                {
+                  "key": "endDate",
+                  "value": "",
+                  "description": "Filter by end date (ISO format)",
+                  "disabled": true
+                },
+                {
+                  "key": "applied",
+                  "value": "",
+                  "description": "Filter by applied status (true/false)",
+                  "disabled": true
+                },
+                {
+                  "key": "sortBy",
+                  "value": "createdAt",
+                  "description": "Sort by field (createdAt or title)"
+                },
+                {
+                  "key": "sortOrder",
+                  "value": "desc",
+                  "description": "Sort order (asc or desc)"
+                }
+              ]
+            },
+            "description": "Get all transactions with optional filtering"
+          },
+          "response": []
+        },
+        {
+          "name": "Get Transaction by ID",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{auth_token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/transactions/{{transaction_id}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "transactions",
+                "{{transaction_id}}"
+              ]
+            },
+            "description": "Get a specific transaction by ID"
+          },
+          "response": []
+        },
+        {
+          "name": "Create Transaction",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{auth_token}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"type\": \"EXPENSE\",\n    \"amount\": 50.25,\n    \"title\": \"Grocery Shopping\",\n    \"tags\": [\"food\", \"essentials\"],\n    \"applied\": false\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/transactions",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "transactions"
+              ]
+            },
+            "description": "Create a new transaction"
+          },
+          "response": []
+        },
+        {
+          "name": "Create Income Transaction",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{auth_token}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"type\": \"INCOME\",\n    \"amount\": 1000.00,\n    \"title\": \"Salary Payment\",\n    \"tags\": [\"salary\", \"work\"],\n    \"applied\": true\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/transactions",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "transactions"
+              ]
+            },
+            "description": "Create a new income transaction"
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Transaction",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{auth_token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/transactions/{{transaction_id}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "transactions",
+                "{{transaction_id}}"
+              ]
+            },
+            "description": "Delete a transaction by ID"
+          },
+          "response": []
+        }
+      ]
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://localhost:3000",
+      "type": "string",
+      "description": "Base URL for the API"
+    },
+    {
+      "key": "auth_token",
+      "value": "YOUR_AUTH_TOKEN",
+      "type": "string",
+      "description": "Authentication token"
+    },
+    {
+      "key": "transaction_id",
+      "value": "TRANSACTION_UUID",
+      "type": "string",
+      "description": "UUID of a transaction"
+    }
+  ]
+}
