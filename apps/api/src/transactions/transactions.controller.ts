@@ -21,7 +21,13 @@ import type {
   CreateTransactionDto
 } from './dto/transaction.dto';
 import { ZodValidationPipe } from '../common/zod-validation.pipe';
-import { Auth } from '../../common/decorators'; // Import Auth decorator
+import { Auth } from '../common/decorators';
+
+type RequestWithAuth = Request & {
+  auth: {
+    userId: string;
+  };
+};
 
 @Controller('transactions')
 export class TransactionsController {
@@ -30,8 +36,8 @@ export class TransactionsController {
   @Get()
   @Auth() // Apply the Auth decorator
   @UsePipes(new ZodValidationPipe(transactionFilterSchema)) // Re-add ZodValidationPipe
-  async findAll(@Req() req: Request, @Query() filters: TransactionFilterDto) {
-    const auth = req.auth as any; // Access req.auth
+  async findAll(@Req() req: RequestWithAuth, @Query() filters: TransactionFilterDto) {
+    const auth = req.auth;
     if (auth && auth.userId) {
       console.log('Authenticated User ID:', auth.userId);
       // The original logic used req.user.id, so we'll adapt it to auth.userId
