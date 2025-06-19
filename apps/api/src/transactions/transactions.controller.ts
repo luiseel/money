@@ -9,45 +9,61 @@ import {
   UsePipes,
   ParseUUIDPipe,
   Req,
+  UseGuards,
 } from "@nestjs/common";
 import { TransactionsService } from "./transactions.service";
 import {
   createTransactionSchema,
   transactionFilterSchema,
-} from "./dto/transaction.dto";
+} from "./dto/transaction.schema";
 import type {
   TransactionFilterDto,
   CreateTransactionDto,
-} from "./dto/transaction.dto";
+} from "./dto/transaction.schema";
 import { ZodValidationPipe } from "../common/zod-validation.pipe";
+import { JwtAuthGuard } from "../auth/jwt-auth.guard";
+import type { AuthRequest } from "../common/auth";
 
+@UseGuards(JwtAuthGuard)
 @Controller("transactions")
 export class TransactionsController {
   constructor(private readonly transactionsService: TransactionsService) {}
 
   @Get()
   @UsePipes(new ZodValidationPipe(transactionFilterSchema))
-  async findAll(@Req() req: Request, @Query() filters: TransactionFilterDto) {
-    const userId = "1";
+  async findAll(
+    @Req() req: AuthRequest,
+    @Query() filters: TransactionFilterDto,
+  ) {
+    const userId = req.user?.sub;
     return this.transactionsService.findAll(userId, filters);
   }
 
   @Get(":id")
-  async findOne(@Req() req, @Param("id", ParseUUIDPipe) id: string) {
-    const userId = req.user.id;
-    return this.transactionsService.findOne(id, userId);
+  async findOne(
+    @Req() req: AuthRequest,
+    @Param("id", ParseUUIDPipe) id: string,
+  ) {
+    const userId = req.user?.sub;
+    return this.transactionsService.findOne(userId, id);
   }
 
   @Post()
   @UsePipes(new ZodValidationPipe(createTransactionSchema))
-  async create(@Req() req, @Body() createTransactionDto: CreateTransactionDto) {
-    const userId = req.user.id;
+  async create(
+    @Req() req: AuthRequest,
+    @Body() createTransactionDto: CreateTransactionDto,
+  ) {
+    const userId = req.user?.sub;
     return this.transactionsService.create(userId, createTransactionDto);
   }
 
   @Delete(":id")
-  async delete(@Req() req, @Param("id", ParseUUIDPipe) id: string) {
-    const userId = req.user.id;
-    return this.transactionsService.delete(id, userId);
+  async delete(
+    @Req() req: AuthRequest,
+    @Param("id", ParseUUIDPipe) id: string,
+  ) {
+    const userId = req.user?.sub;
+    return this.transactionsService.delete(userId, id);
   }
 }

@@ -3,7 +3,7 @@ import { PrismaService } from "../prisma/prisma.service";
 import {
   CreateTransactionDto,
   TransactionFilterDto,
-} from "./dto/transaction.dto";
+} from "./dto/transaction.schema";
 import { Prisma } from "@prisma/client";
 
 @Injectable()
@@ -68,7 +68,6 @@ export class TransactionsService {
     const orderBy: Prisma.TransactionOrderByWithRelationInput = {};
     orderBy[sortBy] = sortOrder;
 
-    // Get transactions with pagination
     const [transactions, total] = await Promise.all([
       this.prisma.transaction.findMany({
         where,
@@ -90,7 +89,7 @@ export class TransactionsService {
     };
   }
 
-  async findOne(id: string, userId: string) {
+  async findOne(userId: string, id: string) {
     const transaction = await this.prisma.transaction.findUnique({
       where: { id, userId },
     });
@@ -115,7 +114,7 @@ export class TransactionsService {
     });
   }
 
-  async delete(id: string, userId: string) {
+  async delete(userId: string, id: string) {
     const transaction = await this.prisma.transaction.findUnique({
       where: { id },
     });
