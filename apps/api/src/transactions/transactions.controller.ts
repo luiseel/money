@@ -10,16 +10,17 @@ import {
   ParseUUIDPipe,
   Req,
   UseGuards,
+  Logger,
 } from "@nestjs/common";
 import { TransactionsService } from "./transactions.service";
 import {
   createTransactionSchema,
   transactionFilterSchema,
-} from "./dto/transaction.schema";
+} from "./schema/transaction";
 import type {
   TransactionFilterDto,
   CreateTransactionDto,
-} from "./dto/transaction.schema";
+} from "./schema/transaction";
 import { ZodValidationPipe } from "../common/zod-validation.pipe";
 import { JwtAuthGuard } from "../auth/jwt-auth.guard";
 import type { AuthRequest } from "../common/auth";
@@ -55,6 +56,7 @@ export class TransactionsController {
     @Body() createTransactionDto: CreateTransactionDto,
   ) {
     const userId = req.user?.sub;
+    Logger.log(userId);
     return this.transactionsService.create(userId, createTransactionDto);
   }
 
