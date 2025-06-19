@@ -9,31 +9,31 @@ import {
   UsePipes,
   ParseUUIDPipe,
   Req,
-} from '@nestjs/common';
-import { TransactionsService } from './transactions.service';
-import { 
-  createTransactionSchema, 
-  transactionFilterSchema, 
-} from './dto/transaction.dto';
-import type { 
+} from "@nestjs/common";
+import { TransactionsService } from "./transactions.service";
+import {
+  createTransactionSchema,
+  transactionFilterSchema,
+} from "./dto/transaction.dto";
+import type {
   TransactionFilterDto,
-  CreateTransactionDto
-} from './dto/transaction.dto';
-import { ZodValidationPipe } from '../common/zod-validation.pipe';
+  CreateTransactionDto,
+} from "./dto/transaction.dto";
+import { ZodValidationPipe } from "../common/zod-validation.pipe";
 
-@Controller('transactions')
+@Controller("transactions")
 export class TransactionsController {
   constructor(private readonly transactionsService: TransactionsService) {}
 
   @Get()
   @UsePipes(new ZodValidationPipe(transactionFilterSchema))
-  async findAll(@Req() req, @Query() filters: TransactionFilterDto) {
-    const userId = req.user.id;
+  async findAll(@Req() req: Request, @Query() filters: TransactionFilterDto) {
+    const userId = "1";
     return this.transactionsService.findAll(userId, filters);
   }
 
-  @Get(':id')
-  async findOne(@Req() req, @Param('id', ParseUUIDPipe) id: string) {
+  @Get(":id")
+  async findOne(@Req() req, @Param("id", ParseUUIDPipe) id: string) {
     const userId = req.user.id;
     return this.transactionsService.findOne(id, userId);
   }
@@ -45,8 +45,8 @@ export class TransactionsController {
     return this.transactionsService.create(userId, createTransactionDto);
   }
 
-  @Delete(':id')
-  async delete(@Req() req, @Param('id', ParseUUIDPipe) id: string) {
+  @Delete(":id")
+  async delete(@Req() req, @Param("id", ParseUUIDPipe) id: string) {
     const userId = req.user.id;
     return this.transactionsService.delete(id, userId);
   }

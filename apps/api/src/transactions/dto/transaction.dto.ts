@@ -1,5 +1,5 @@
-import { z } from 'zod';
-import { TransactionType } from '@prisma/client';
+import { z } from "zod";
+import { TransactionType } from "@prisma/client";
 
 // Base schema for transaction data
 export const transactionSchema = z.object({
@@ -24,7 +24,7 @@ export const transactionFilterSchema = z.object({
   startDate: z.coerce.date().optional(),
   endDate: z.coerce.date().optional(),
   applied: z.coerce.boolean().optional(),
-  sortBy: z.enum(['createdAt', 'title']).optional().default('createdAt'),
-  sortOrder: z.enum(['asc', 'desc']).optional().default('desc'),
+  sortBy: z.enum(["createdAt", "title"]).optional().default("createdAt"),
+  sortOrder: z.enum(["asc", "desc"]).optional().default("desc"),
 });
 export type TransactionFilterDto = z.infer<typeof transactionFilterSchema>;
