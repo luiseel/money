@@ -3,14 +3,19 @@ import { PrismaService } from "../prisma/prisma.service";
 import {
   CreateTransactionDto,
   TransactionFilterDto,
-} from "./dto/transaction.schema";
+} from "./schema/transaction";
 import { Prisma } from "@prisma/client";
+import { UsersService } from "src/users/users.service";
 
 @Injectable()
 export class TransactionsService {
-  constructor(private prisma: PrismaService) {}
+  constructor(
+    private prisma: PrismaService,
+    private usersService: UsersService,
+  ) {}
 
   async findAll(userId: string, filters: TransactionFilterDto) {
+    const user = await this.usersService.findByClerkId(userId);
     const {
       page,
       limit,
@@ -28,7 +33,7 @@ export class TransactionsService {
 
     // Build where conditions
     const where: Prisma.TransactionWhereInput = {
-      userId,
+      userId: user.id,
     };
 
     if (type) {
@@ -90,8 +95,9 @@ export class TransactionsService {
   }
 
   async findOne(userId: string, id: string) {
+    const user = await this.usersService.findByClerkId(userId);
     const transaction = await this.prisma.transaction.findUnique({
-      where: { id, userId },
+      where: { id, userId: user.id },
     });
 
     if (!transaction) {
@@ -102,6 +108,7 @@ export class TransactionsService {
   }
 
   async create(userId: string, data: CreateTransactionDto) {
+    const user = await this.usersService.findByClerkId(userId);
     return this.prisma.transaction.create({
       data: {
         type: data.type,
@@ -109,17 +116,18 @@ export class TransactionsService {
         title: data.title,
         tags: data.tags || [],
         applied: data.applied,
-        userId,
+        userId: user.id,
       },
     });
   }
 
   async delete(userId: string, id: string) {
+    const user = await this.usersService.findByClerkId(userId);
     const transaction = await this.prisma.transaction.findUnique({
       where: { id },
     });
 
-    if (!transaction || transaction.userId !== userId) {
+    if (!transaction || transaction.userId !== user.id) {
       throw new NotFoundException(`Transaction with ID ${id} not found`);
     }
 

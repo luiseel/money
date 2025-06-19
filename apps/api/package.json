@@ -15,12 +15,13 @@
     "lint": "eslint \"{src,apps,libs,test}/**/*.ts\""
   },
   "dependencies": {
+    "@clerk/backend": "^2.1.0",
     "@nestjs/common": "^11.1.2",
     "@nestjs/core": "^11.1.2",
     "@nestjs/passport": "^11.0.5",
     "@nestjs/platform-express": "^10.3.0",
     "@nestjs/swagger": "^11.2.0",
-    "@prisma/client": "6.9.0",
+    "@prisma/client": "6.10.1",
     "jwks-rsa": "^3.2.0",
     "passport-jwt": "^4.0.1",
     "reflect-metadata": "^0.2.0",
@@ -30,7 +31,7 @@
   "devDependencies": {
     "@jest/globals": "^29.7.0",
     "@nestjs/cli": "^10.0.0",
-    "@nestjs/schematics": "^10.0.0",
+    "@nestjs/schematics": "^10.2.3",
     "@nestjs/testing": "^10.0.0",
     "@repo/eslint-config": "workspace:*",
     "@repo/jest-config": "workspace:*",
@@ -40,7 +41,7 @@
     "@types/passport-jwt": "^4.0.1",
     "@types/supertest": "^6.0.0",
     "jest": "^29.7.0",
-    "prisma": "^6.9.0",
+    "prisma": "^6.10.1",
     "source-map-support": "^0.5.21",
     "supertest": "^6.3.3",
     "ts-jest": "^29.2.5",
