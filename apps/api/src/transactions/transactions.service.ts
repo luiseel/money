@@ -5,7 +5,7 @@ import {
   TransactionFilterDto,
 } from "./schema/transaction";
 import { Prisma } from "@prisma/client";
-import { UsersService } from "src/users/users.service";
+import { UsersService } from "../users/users.service";
 
 @Injectable()
 export class TransactionsService {
