@@ -2,7 +2,7 @@
 CREATE TYPE "TransactionType" AS ENUM ('INCOME', 'EXPENSE');
 
 -- CreateTable
-CREATE TABLE "users" (
+CREATE TABLE "user" (
     "id" TEXT NOT NULL,
     "clerk_user_id" TEXT NOT NULL,
     "name" TEXT NOT NULL,
@@ -11,11 +11,11 @@ CREATE TABLE "users" (
     "updated_at" TIMESTAMP(3) NOT NULL,
     "deleted" BOOLEAN NOT NULL DEFAULT false,
 
-    CONSTRAINT "users_pkey" PRIMARY KEY ("id")
+    CONSTRAINT "user_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
-CREATE TABLE "transactions" (
+CREATE TABLE "transaction" (
     "id" TEXT NOT NULL,
     "type" "TransactionType" NOT NULL,
     "amount" DECIMAL(10,2) NOT NULL,
@@ -25,11 +25,11 @@ CREATE TABLE "transactions" (
     "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "user_id" TEXT NOT NULL,
 
-    CONSTRAINT "transactions_pkey" PRIMARY KEY ("id")
+    CONSTRAINT "transaction_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
-CREATE TABLE "recurring_transactions" (
+CREATE TABLE "recurring_transaction" (
     "id" TEXT NOT NULL,
     "type" "TransactionType" NOT NULL,
     "amount" DECIMAL(10,2) NOT NULL,
@@ -44,14 +44,14 @@ CREATE TABLE "recurring_transactions" (
     "updated_at" TIMESTAMP(3) NOT NULL,
     "user_id" TEXT NOT NULL,
 
-    CONSTRAINT "recurring_transactions_pkey" PRIMARY KEY ("id")
+    CONSTRAINT "recurring_transaction_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateIndex
-CREATE UNIQUE INDEX "users_clerk_user_id_key" ON "users"("clerk_user_id");
+CREATE UNIQUE INDEX "user_clerk_user_id_key" ON "user"("clerk_user_id");
 
 -- AddForeignKey
-ALTER TABLE "transactions" ADD CONSTRAINT "transactions_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "users"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "transaction" ADD CONSTRAINT "transaction_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "user"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "recurring_transactions" ADD CONSTRAINT "recurring_transactions_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "users"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "recurring_transaction" ADD CONSTRAINT "recurring_transaction_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "user"("id") ON DELETE RESTRICT ON UPDATE CASCADE;

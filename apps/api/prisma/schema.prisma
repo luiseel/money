@@ -29,7 +29,7 @@ model User {
   transactions          Transaction[]
   recurringTransactions RecurringTransaction[]
 
-  @@map("users")
+  @@map("user")
 }
 
 model Transaction {
@@ -43,7 +43,7 @@ model Transaction {
   userId    String          @map("user_id")
   user      User            @relation(fields: [userId], references: [id])
 
-  @@map("transactions")
+  @@map("transaction")
 }
 
 model RecurringTransaction {
@@ -62,5 +62,5 @@ model RecurringTransaction {
   userId    String          @map("user_id")
   user      User            @relation(fields: [userId], references: [id])
 
-  @@map("recurring_transactions")
+  @@map("recurring_transaction")
 }
